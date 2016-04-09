@@ -21,9 +21,6 @@ class InstallSchema implements InstallSchemaInterface
 
         $installer->startSetup();
 
-        /**
-         * Create table 'wishlist'
-         */
         $table = $installer->getConnection()->newTable(
             $installer->getTable('admin_favorites')
         )->addColumn(
