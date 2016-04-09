@@ -8,8 +8,8 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
     <menu>
         <add id="Hackathon_AdminFavorites::favorites" title="Favorites" translate="title" module="Hackathon_AdminFavorites" sortOrder="80" resource="Hackathon_AdminFavorites::favorites"/>
-        <add id="Hackathon_AdminFavorites::myfavorites" title="My Favorites" translate="title" module="Hackathon_AdminFavorites" parent="Hackathon_AdminFavorites::favorites" sortOrder="10" resource="Hackathon_AdminFavorites::myfavorites"/>
-        <add id="Hackathon_AdminFavorites::recentlyviewed" title="Recently Viewed" translate="title" module="Hackathon_AdminFavorites" parent="Hackathon_AdminFavorites::favorites" sortOrder="20" resource="Hackathon_AdminFavorites::recentlyviewed"/>
-        <add id="Hackathon_AdminFavorites::mostlyviewed" title="Mostly Viewed" translate="title" module="Hackathon_AdminFavorites" parent="Hackathon_AdminFavorites::favorites" sortOrder="30" resource="Hackathon_AdminFavorites::mostlyviewed"/>
+        <add id="Hackathon_AdminFavorites::my_favorites" title="My Favorites" translate="title" module="Hackathon_AdminFavorites" parent="Hackathon_AdminFavorites::favorites" sortOrder="10" resource="Hackathon_AdminFavorites::myfavorites"/>
+        <add id="Hackathon_AdminFavorites::recently_viewed" title="Recently Viewed" translate="title" module="Hackathon_AdminFavorites" parent="Hackathon_AdminFavorites::favorites" sortOrder="20" resource="Hackathon_AdminFavorites::recently_viewed"/>
+        <add id="Hackathon_AdminFavorites::mostly_viewed" title="Mostly Viewed" translate="title" module="Hackathon_AdminFavorites" parent="Hackathon_AdminFavorites::favorites" sortOrder="30" resource="Hackathon_AdminFavorites::mostly_viewed"/>
     </menu>
 </config>

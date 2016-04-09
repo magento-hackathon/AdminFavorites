@@ -11,7 +11,7 @@ Framework/Acl/etc/acl.xsd">
                     <resource id="Hackathon_AdminFavorites::mostviewed" title="Most Viewed" sortOrder="10" />
                     <resource id="Hackathon_AdminFavorites::myfavorites" title="My Favorites" sortOrder="20" />
                     <resource id="Hackathon_AdminFavorites::recentlyviewed" title="Recently Viewed" sortOrder="30" />
-                    </resource>
+                </resource>
             </resource>
         </resources>
     </acl>
