@@ -1,0 +1,31 @@
+<style>
+    .favorites-action:before {
+        content: "\e606";
+    }
+</style>
+<?php
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php /** @var $this \Hackathon\AdminFavorites\Block\ToolbarEntry */ ?>
+<?php
+$isFavorite = $block->isCurrentPageFavorite();
+?>
+<div class="notifications-wrapper admin__action-dropdown-wrap"
+    data-mage-init='{"toolbarEntry": {}}'
+    data-favorites-key="">
+    <?php if ($isFavorite) : ?>
+        <a
+            class="notifications-action admin__action-dropdown"
+            href="/"
+            title="<?php /* @escapeNotVerified */ echo __('Click to remove Favorite'); ?>">
+        </a>
+    <?php else : ?>
+        <a
+            class="notifications-action favorites-action admin__action-dropdown"
+            href="/"
+            title="<?php /* @escapeNotVerified */ echo __('Click to add Favorite'); ?>">
+        </a>
+    <?php endif; ?>
+</div>
