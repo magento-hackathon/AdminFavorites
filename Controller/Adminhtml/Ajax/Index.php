@@ -43,25 +43,19 @@ class Index extends \Magento\Backend\App\Action
      */
     public function execute()
     {
-        $url = $this->getRequest()->getParam('url');
-        if (!$url) {
-            throw new Exception('URL not given!');
-        }
+        $url = $this->getUrlString();
 
-        $label = $this->getRequest()->getParam('label');
-        if (!$label) {
-            throw new Exception('Label not given!');
-        }
-
-        $userId = $this->_authSession->getUser()->getId();
+        $userId = $this->getAdminUserId();
 
         /** @var \Hackathon\AdminFavorites\Model\Favorite $favorite */
         $favorite = $this->_favoriteFactory->create();
         
+        $favorite->loadByUserIdAndUrl($userId, $url);
+        
         $favorite->addData([
             'url' => $url,
             'user_id' => $userId,
-            'label' => $label,
+            'label' => $this->getLabel(),
             'updated_at' => new \Zend_Db_Expr('NOW()'),
             'number_visits' => intval($favorite->getData('number_visits')) + 1,
         ]);
@@ -77,5 +71,39 @@ class Index extends \Magento\Backend\App\Action
         return $resultRaw
             ->setContents(\Zend_Json::encode($output))
             ->setHeader('Content-Type', 'application/json');
+    }
+
+    /**
+     * @return mixed
+     * @throws Exception
+     */
+    private function getUrlString()
+    {
+        $url = $this->getRequest()->getParam('url');
+        if (!$url) {
+            throw new Exception('URL not given!');
+        }
+        return $url;
+    }
+
+    /**
+     * @return mixed
+     * @throws Exception
+     */
+    private function getLabel()
+    {
+        $label = $this->getRequest()->getParam('label');
+        if (!$label) {
+            throw new Exception('Label not given!');
+        }
+        return $label;
+    }
+
+    /**
+     * @return mixed
+     */
+    private function getAdminUserId()
+    {
+        return $this->_authSession->getUser()->getId();
     }
 }

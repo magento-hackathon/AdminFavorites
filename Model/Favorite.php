@@ -13,4 +13,20 @@ class Favorite extends \Magento\Framework\Model\AbstractModel implements Favorit
     {
         return [self::CACHE_TAG . '_' . $this->getId()];
     }
+
+    /**
+     * Load object data
+     *
+     * @param integer $userId
+     * @param string $url
+     * @return $this
+     */
+    public function loadByUserIdAndUrl($userId, $url)
+    {
+        $this->_getResource()->loadByUserIdAndUrl($this, $userId, $url);
+        $this->_afterLoad();
+        $this->setOrigData();
+        $this->_hasDataChanges = false;
+        return $this;
+    }
 }
