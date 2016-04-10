@@ -11,9 +11,9 @@ define([
         }
         $('#favorites-menu').html('');
         $.each(json, function(element, value){
-            var element = '<li data-ui-id="menu-magento-reports-report-shopcart-product" class="item-report-shopcart-product level-2" role="menu-item">' +
-                '<a href="'+value.url+'" class="">' +
-                '<span class="favorites-item">'+value.label+'</span>' +
+            var element = '<li data-ui-id="menu-magento-reports-report-shopcart-product" class="item-favorites-link item-report-shopcart-product level-2" role="menu-item">' +
+                '<a href="'+value.url+'" class="item-favorites-link">' +
+                '<div class="favorites-item">'+value.label+'</div>' +
                 '</a>' +
                 '</li>';
             $('#favorites-menu').append(element);
@@ -25,9 +25,9 @@ define([
         }
         $('#recently-viewed-menu').html('');
         $.each(json, function(element, value){
-            var element = '<li data-ui-id="menu-magento-reports-report-shopcart-product" class="item-report-shopcart-product level-2" role="menu-item">' +
-                '<a href="'+value.url+'" class="">' +
-                '<span class="favorites-item">'+value.label+'</span>' +
+            var element = '<li data-ui-id="menu-magento-reports-report-shopcart-product" class="item-favorites-link item-report-shopcart-product level-2" role="menu-item">' +
+                '<a href="'+value.url+'" class="item-favorites-link">' +
+                '<div class="favorites-item">'+value.label+'</div>' +
                 '</a>' +
                 '</li>';
 
@@ -40,9 +40,9 @@ define([
         }
         $('#mostly-viewed-menu').html('');
         $.each(json, function(element, value){
-            var element = '<li data-ui-id="menu-magento-reports-report-shopcart-product" class="item-report-shopcart-product level-2" role="menu-item">' +
-                '<a href="'+value.url+'" class="">' +
-                '<span class="favorites-item">'+value.label+'</span>' +
+            var element = '<li data-ui-id="menu-magento-reports-report-shopcart-product" class="item-favorites-link item-report-shopcart-product level-2" role="menu-item">' +
+                '<a href="'+value.url+'" class="item-favorites-link">' +
+                '<div class="favorites-item">'+value.label+'</div>' +
                 '</a>' +
                 '</li>';
 
