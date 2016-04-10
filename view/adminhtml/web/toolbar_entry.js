@@ -9,6 +9,7 @@ define([
         if(!typeof json == 'object'){
             var json = JSON.parse(json);
         }
+        $('#favorites-menu').html('');
         $.each(json, function(element, value){
             var element = '<li data-ui-id="menu-magento-reports-report-shopcart-product" class="item-report-shopcart-product level-2" role="menu-item">' +
                 '<a href="'+value.url+'" class="">' +
@@ -22,6 +23,7 @@ define([
         if(!typeof json == 'object'){
             var json = JSON.parse(json);
         }
+        $('#recently-viewed-menu').html('');
         $.each(json, function(element, value){
             var element = '<li data-ui-id="menu-magento-reports-report-shopcart-product" class="item-report-shopcart-product level-2" role="menu-item">' +
                 '<a href="'+value.url+'" class="">' +
@@ -36,6 +38,7 @@ define([
         if(!typeof json == 'object'){
             var json = JSON.parse(json);
         }
+        $('#mostly-viewed-menu').html('');
         $.each(json, function(element, value){
             var element = '<li data-ui-id="menu-magento-reports-report-shopcart-product" class="item-report-shopcart-product level-2" role="menu-item">' +
                 '<a href="'+value.url+'" class="">' +
