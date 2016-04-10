@@ -105,11 +105,13 @@ define([
     // Update favorite
     $('#adminfavorites_add').click(function (event) {
         event.stopPropagation();
+        $('#adminfavorites_add span').html('Adding...');
         $.ajax({
             type: "POST",
             url: addFavoriteUrl,
             data: {'url':currentPageKey, 'label':document.title},
             success: function (response) {
+                $('#adminfavorites_add span').html('Add');
                 showActionButton(response);
                 populateFavoritesMenu(response);
             }
@@ -120,11 +122,13 @@ define([
     });
     $('#adminfavorites_remove').click(function (event) {
         event.stopPropagation();
+        $('#adminfavorites_remove span').html('Removing...');
         $.ajax({
             type: "POST",
             url: removeFavoriteUrl,
             data: {'url':currentPageKey},
             success: function (response) {
+                $('#adminfavorites_remove span').html('Remove');
                 showActionButton(response);
                 populateFavoritesMenu(response);
             }
