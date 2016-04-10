@@ -1,6 +1,6 @@
 <style>
     .favorites-action:before {
-        content: "\e606";
+        content: "\e606";       /* This is not ideal, but it's good enough for now in a hackathon. */
     }
 </style>
 <?php
@@ -29,3 +29,9 @@ $isFavorite = $block->isCurrentPageFavorite();
         </a>
     <?php endif; ?>
 </div>
+<script type="text/javascript">
+    require(['jquery','adminFavoritesToolbarEntry'],function($){
+        $(window).load(function() {
+        });
+    });
+</script>
