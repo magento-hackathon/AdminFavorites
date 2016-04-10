@@ -1,0 +1,89 @@
+<?php
+//                                               STEP 1 - always do       
+/*
+do NOT need to check if logged in+if admin
+because if the hidden input fields for user id + url+key are there, and not empty 
+then it's gtg, otherwise do nothing 
+1. get parameter
+$action
+*/
+//$controller = ;
+//$action     = ;
+//$label      = ;
+//$url        = $getBaseUrl . '/' . $controller . '/' . $action;
+
+$hackathon_admin_favorites = array(
+    // 'url'       => filter_var($url, FILTER_SANITIZE_URL),
+    // 'user_id'   => intval($user_id),
+    // 'label'     => filter_var($label, FILTER_SANITIZE_STRING)
+    'controller' => $getRequestController,
+    'action'     => $getRequestAction,
+    'label'      => $getPageTitle,
+    'sysconfig'  => ''
+);
+
+if ($controller == 'system_config' && $action =='edit' && isset($parms['section'])) {
+    $hackathon_admin_favorites['sysconfig'] = $parms['section'];
+    //$url .= "/section{$parms['section']}";
+}
+
+$data_packet = json_encode($hackathon_admin_favorites);
+
+$ajax_url_get_favs   = $getBaseUrl . '/hackathon_admin_favorites/' . 'get_favs';
+$ajax_url_toggle_fav = $getBaseUrl . '/hackathon_admin_favorites/' . 'toggle_fav';
+$ajax_url_edit_label = $getBaseUrl . '/hackathon_admin_favorites/' . 'edit_label';
+
+// maybe check if use formkey on url sus config is true, whatever
+//url .= "/key/{$formkey}";
+// make url array, whatever passinto mage::createurl 
+//$user_id    = $getUserId;
+//$label      = $getPageTitle;
+
+//$hackathon_admin_favorites = array(
+//    'url'       => filter_var($url, FILTER_SANITIZE_URL),
+//    'user_id'   => intval($user_id),
+//    'label'     => filter_var($label, FILTER_SANITIZE_STRING)
+//);
+?>
+
+<script type="text/javascript">
+function hackathon_admin_favorites_get_favs(){
+    
+};
+function hackathon_admin_favorites_toggle_fav(){
+    
+};
+function hackathon_admin_favorites_edit_label(){
+    
+}; 
+$( document ).ready(function() {
+    // ajax call to grab values above and send to the hackathon_admin_favorites/checkurl
+    // returns json or 3 arrays  - favs, popular, recent
+    $.ajax({
+      type: "POST",
+      url:  "<?=$ajax_url_get_favs?>",
+      data: "<?=$data_packet?>",
+      success: success,
+      dataType: dataType
+    }).done(function() {
+        foreach(result) {
+            // add urls for each column
+            // foreach input box, on change, update label
+        }
+        $('#hackathon_admin_favorites_heart').show();   
+    });
+    // ajax call to toggle fav //no fav
+    $('#hackathon_admin_favorites_heart').click(function() {
+        $.ajax({
+          type: "POST",
+          url:  "<?=$ajax_url_toggle_fav?>",
+          data: "<?=$data_packet?>",
+          success: success,
+          dataType: dataType
+        }).done(function() {
+            $('#hackathon_admin_favorites_heart').addClass(result.is_favorite);   
+        });
+    });
+});
+</script>
+<div id="hackathon_admin_favorites_heart" class="hidden"></div>
