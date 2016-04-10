@@ -5,6 +5,7 @@ use Magento\TestFramework\Inspection\Exception;
 
 class Index extends \Magento\Backend\App\Action
 {
+    const MAX_NUMBER_ITEMS = 10;
     /**
      * @var \Hackathon\AdminFavorites\Model\FavoriteFactory
      */
@@ -62,9 +63,7 @@ class Index extends \Magento\Backend\App\Action
         
         $favorite->save();
         
-        $output = [
-            'is_favorite' => intval($favorite->getData('is_favorite')),
-        ];
+        $output = $this->getOutputdata($favorite);
         
         /** @var \Magento\Framework\Controller\Result\Raw $resultRaw */
         $resultRaw = $this->resultRawFactory->create();
@@ -105,5 +104,81 @@ class Index extends \Magento\Backend\App\Action
     private function getAdminUserId()
     {
         return $this->_authSession->getUser()->getId();
+    }
+
+    /**
+     * @param \Hackathon\AdminFavorites\Model\Favorite $currentFavorite
+     * @return array
+     */
+    private function getOutputdata($currentFavorite)
+    {
+        $data = [
+            'is_favorite' => intval($currentFavorite->getData('is_favorite')),
+            'my_favorites' => [],
+            'recently_viewed' => [],
+            'mostly_viewed' => [],
+        ];
+        
+        foreach($this->getMyFavoritesCollection($currentFavorite) as $favorite) {
+            $data['my_favorites'][] = $this->getFavoriteDataForOutput($favorite);
+        }
+        
+        foreach($this->getRecentlyViewedCollection($currentFavorite) as $favorite) {
+            $data['recently_viewed'][] = $this->getFavoriteDataForOutput($favorite);
+        }
+        
+        foreach($this->getMostlyViewedCollection($currentFavorite) as $favorite) {
+            $data['mostly_viewed'][] = $this->getFavoriteDataForOutput($favorite);
+        }
+        
+        return $data;
+    }
+
+    /**
+     * @param \Hackathon\AdminFavorites\Model\Favorite $favorite
+     * @return \Hackathon\AdminFavorites\Model\ResourceModel\Favorite\Collection
+     */
+    private function getMyFavoritesCollection($favorite)
+    {
+        return $favorite->getCollection()
+            ->addFieldToFilter('user_id', $this->getAdminUserId())
+            ->addFieldToFilter('is_favorite', 1)
+            ->setPageSize(self::MAX_NUMBER_ITEMS);
+    }
+
+    /**
+     * @param \Hackathon\AdminFavorites\Model\Favorite $favorite
+     * @return \Hackathon\AdminFavorites\Model\ResourceModel\Favorite\Collection
+     */
+    private function getRecentlyViewedCollection($favorite)
+    {
+        return $favorite->getCollection()
+            ->addFieldToFilter('user_id', $this->getAdminUserId())
+            ->setOrder('updated_at', 'desc')
+            ->setPageSize(self::MAX_NUMBER_ITEMS);
+    }
+
+    /**
+     * @param \Hackathon\AdminFavorites\Model\Favorite $favorite
+     * @return \Hackathon\AdminFavorites\Model\ResourceModel\Favorite\Collection
+     */
+    private function getMostlyViewedCollection($favorite)
+    {
+        return $favorite->getCollection()
+            ->addFieldToFilter('user_id', $this->getAdminUserId())
+            ->setOrder('number_visits', 'desc')
+            ->setPageSize(self::MAX_NUMBER_ITEMS);
+    }
+
+    /**
+     * @param \Hackathon\AdminFavorites\Model\Favorite $favorite
+     * @return array
+     */
+    private function getFavoriteDataForOutput($favorite)
+    {
+        return [
+            'url' => $favorite->getData('url'),
+            'label' => $favorite->getData('label'),
+        ];
     }
 }
