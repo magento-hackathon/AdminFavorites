@@ -26,9 +26,6 @@
 
 ?>
 <?php /** @var $this \Hackathon\AdminFavorites\Block\ToolbarEntry */ ?>
-<?php
-$isFavorite = $block->isCurrentPageFavorite();
-?>
 <div
     id="favorites-wrapper-id"
     class="favorites-wrapper admin__action-dropdown-wrap"
@@ -44,15 +41,12 @@ $isFavorite = $block->isCurrentPageFavorite();
     >
     </a>
     <div class="admin__action-dropdown-menu">
-        <?php if ($isFavorite) : ?>
-            <button id="adminfavorites_remove" type="button" title="Remove this page from favorites">
+            <button id="adminfavorites_remove" class="hidden" type="button" title="Remove this page from favorites">
                 <span>Remove</span>
             </button>
-        <?php else: ?>
-            <button id="adminfavorites_add" type="button" title="Add this page to favorites">
+            <button id="adminfavorites_add" class="hidden" type="button" title="Add this page to favorites">
                 <span>Add</span>
             </button>
-        <?php endif;?>
 
         <ul
             class="favorites-menu-row"

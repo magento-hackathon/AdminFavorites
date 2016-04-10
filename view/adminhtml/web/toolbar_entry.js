@@ -5,8 +5,6 @@ define([
 ], function ($) {
     'use strict';
 
-    var json = '{"is_favorite":1,"my_favorites":[{"url":"http:\/\/adminfavorites.local\/admin_jz5czk\/test\/abc\/12\/","label":"Test"}],"recently_viewed":[{"url":"http:\/\/adminfavorites.local\/admin_jz5czk\/test\/abc\/14\/","label":"Test"},{"url":"http:\/\/adminfavorites.local\/admin_jz5czk\/test\/abc\/14\/param\/1\/","label":"Test"},{"url":"http:\/\/adminfavorites.local\/admin_jz5czk\/test\/abc\/13\/","label":"Test"},{"url":"http:\/\/adminfavorites.local\/admin_jz5czk\/test\/abc\/12\/","label":"Test"}],"mostly_viewed":[{"url":"http:\/\/adminfavorites.local\/admin_jz5czk\/test\/abc\/14\/param\/1\/","label":"Test"},{"url":"http:\/\/adminfavorites.local\/admin_jz5czk\/test\/abc\/12\/","label":"Test"},{"url":"http:\/\/adminfavorites.local\/admin_jz5czk\/test\/abc\/13\/","label":"Test"},{"url":"http:\/\/adminfavorites.local\/admin_jz5czk\/test\/abc\/14\/","label":"Test"}]}';
-    var parsedJson = JSON.parse(json);
     var populateFavorites = function(json){
         if(!typeof json == 'object'){
             var json = JSON.parse(json);
@@ -19,7 +17,7 @@ define([
                 '</li>';
             $('#favorites-menu').append(element);
         });
-    }
+    };
     var populateRecentlyViewed = function(json){
         if(!typeof json == 'object'){
             var json = JSON.parse(json);
@@ -33,7 +31,7 @@ define([
 
             $('#recently-viewed-menu').append(element);
         });
-    }
+    };
     var populateMostlyViewed = function(json){
         if(!typeof json == 'object'){
             var json = JSON.parse(json);
@@ -47,7 +45,7 @@ define([
 
             $('#mostly-viewed-menu').append(element);
         });
-    }
+    };
     var populateFavoritesMenu = function(json){
         if(typeof json == "object") {
             if(json.my_favorites) {
@@ -60,7 +58,18 @@ define([
                 populateRecentlyViewed(json.recently_viewed);
             }
         }
-    }
+    };
+    var showActionButton = function(json){
+        if(typeof json == "object") {
+            if(json.is_favorite == '1') {
+                $("#adminfavorites_remove").removeClass('hidden');
+                $("#adminfavorites_add").addClass('hidden');
+            } else {
+                $("#adminfavorites_add").removeClass('hidden');
+                $("#adminfavorites_remove").addClass('hidden');
+            }
+        }
+    };
     var viewPage = function(){
         var requestUrl = $('#favorites-wrapper-id').attr('data-increment-page-viewed-url');
         console.log(requestUrl);
@@ -77,11 +86,12 @@ define([
             data: requestData,
             showLoader: false
         }).done(function(response) {
+            showActionButton(response);
             populateFavoritesMenu(response);
             console.log(response);
         });
 
-    }
+    };
     viewPage();
 
     var showFavoriteDetails = function (favoriteEntry) {
@@ -95,8 +105,10 @@ define([
         $.ajax({
             type: "POST",
             url: addFavoriteUrl,
-            data: {'url':currentPageKey, 'label':currentPageKey},
-            success: function () {
+            data: {'url':currentPageKey, 'label':document.title},
+            success: function (response) {
+                showActionButton(response);
+                populateFavoritesMenu(response);
             }
         }).done(function () {
             //$('#hackathon_admin_favorites_heart').addClass(result.is_favorite);
@@ -109,7 +121,9 @@ define([
             type: "POST",
             url: removeFavoriteUrl,
             data: {'url':currentPageKey},
-            success: function () {
+            success: function (response) {
+                showActionButton(response);
+                populateFavoritesMenu(response);
             }
         }).done(function () {
             //$('#hackathon_admin_favorites_heart').addClass(result.is_favorite);
