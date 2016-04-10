@@ -1,18 +1,39 @@
 <?php
 namespace Hackathon\AdminFavorites\Controller\Adminhtml\Favorites;
 
-class AjaxGet extends \Magento\Backend\App\Action
+class AjaxRemove extends \Hackathon\AdminFavorites\Controller\Adminhtml\AjaxAbstract
 {
     /**
      *
+     * @throws \Magento\Framework\Exception\LocalizedException
      */
     public function execute()
     {
-//        if (!$this->getRequest()->getPostValue()) {
-//            return;
-//        }
+        $url = $this->getUrlString();
 
-        $result = array('item1'=>'value1', 'item2'=>'value2');
-        $this->getResponse()->representJson($this->jsonHelper->jsonEncode($result));
+        $userId = $this->getAdminUserId();
+
+        /** @var \Hackathon\AdminFavorites\Model\Favorite $favorite */
+        $favorite = $this->_favoriteFactory->create();
+
+        $favorite->loadByUserIdAndUrl($userId, $url);
+
+        $favorite->addData([
+            'url' => $url,
+            'user_id' => $userId,
+            'label' => $this->getLabel(),
+            'is_favorite' => '0',
+            'updated_at' => new \Zend_Db_Expr('NOW()')
+        ]);
+
+        $favorite->save();
+
+        $output = $this->getOutputdata($favorite);
+
+        /** @var \Magento\Framework\Controller\Result\Raw $resultRaw */
+        $resultRaw = $this->resultRawFactory->create();
+        return $resultRaw
+            ->setContents(\Zend_Json::encode($output))
+            ->setHeader('Content-Type', 'application/json');
     }
 }

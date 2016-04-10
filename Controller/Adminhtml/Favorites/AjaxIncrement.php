@@ -1,7 +1,7 @@
 <?php
 namespace Hackathon\AdminFavorites\Controller\Adminhtml\Favorites;
 
-class AjaxAdd extends \Hackathon\AdminFavorites\Controller\Adminhtml\AjaxAbstract
+class AjaxIncrement extends \Hackathon\AdminFavorites\Controller\Adminhtml\AjaxAbstract
 {
     /**
      * @param \Magento\Backend\App\Action\Context $context
@@ -22,7 +22,7 @@ class AjaxAdd extends \Hackathon\AdminFavorites\Controller\Adminhtml\AjaxAbstrac
     }
 
     /**
-     *
+     * Increment the visit count for this url.
      */
     public function execute()
     {
@@ -39,8 +39,8 @@ class AjaxAdd extends \Hackathon\AdminFavorites\Controller\Adminhtml\AjaxAbstrac
             'url' => $url,
             'user_id' => $userId,
             'label' => $this->getLabel(),
-            'is_favorite' => '1',
-            'updated_at' => new \Zend_Db_Expr('NOW()')
+            'updated_at' => new \Zend_Db_Expr('NOW()'),
+            'number_visits' => intval($favorite->getData('number_visits')) + 1,
         ]);
 
         $favorite->save();
