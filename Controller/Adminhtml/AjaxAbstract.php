@@ -129,6 +129,8 @@ abstract class AjaxAbstract extends \Magento\Backend\App\Action
     }
 
     /**
+     * This should be in a helper. I'd move it but I have no idea how right now.
+     *
      * @param string $route
      * @return string
      * @throws \Exception
