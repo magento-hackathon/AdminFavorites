@@ -32,23 +32,13 @@ $isFavorite = $block->isCurrentPageFavorite();
 <div class="favorites-wrapper admin__action-dropdown-wrap"
     data-mage-init='{"toolbarEntry": {}}'
     data-favorites-key="">
-    <?php if ($isFavorite) : ?>
-        <a
-            class="favorites-action admin__action-dropdown"
-            title="<?php /* @escapeNotVerified */ echo __('Click to remove Favorite'); ?>"
-            data-mage-init='{"dropdown":{}}'
-            data-toggle="dropdown"
-        >
-        </a>
-    <?php else : ?>
-        <a
-            class="favorites-action admin__action-dropdown"
-            title="<?php /* @escapeNotVerified */ echo __('Click to add Favorite'); ?>"
-            data-mage-init='{"dropdown":{}}'
-            data-toggle="dropdown"
-        >
-        </a>
-    <?php endif; ?>
+    <a
+        class="favorites-action admin__action-dropdown"
+        title="<?php /* @escapeNotVerified */ echo __('Click to remove Favorite'); ?>"
+        data-mage-init='{"dropdown":{}}'
+        data-toggle="dropdown"
+    >
+    </a>
     <div class="admin__action-dropdown-menu">
         <?php if ($isFavorite) : ?>
             <button id="adminfavorites_remove" type="button" title="Remove this page from favorites">
