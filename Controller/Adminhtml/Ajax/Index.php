@@ -177,8 +177,31 @@ class Index extends \Magento\Backend\App\Action
     private function getFavoriteDataForOutput($favorite)
     {
         return [
-            'url' => $favorite->getData('url'),
+            'url' => $this->getRouteUrl($favorite->getData('url')),
             'label' => $favorite->getData('label'),
         ];
+    }
+
+    /**
+     * @param string $route
+     * @return string
+     * @throws \Exception
+     */
+    private function getRouteUrl($route) 
+    {
+        $routeParts = explode('/', $route);
+        if (sizeof($routeParts) < 3) {
+            throw new \Exception('Route must contain at least 2 slashes.');
+        }
+        $routePath = $routeParts[0] . '/' . $routeParts[1] . '/' . $routeParts[2];
+        $routeParams = [];
+        for ($i = 3; $i < sizeof($routeParts); $i += 2) {
+            $routeParams[$routeParts[$i]] = $routeParts[$i + 1];
+        }
+        
+        /** @var \Magento\Framework\UrlInterface $urlInterface */
+        $urlInterface = \Magento\Framework\App\ObjectManager::getInstance()->get('Magento\Backend\Model\UrlInterface');
+        
+        return $urlInterface->getUrl($routePath, $routeParams);
     }
 }
