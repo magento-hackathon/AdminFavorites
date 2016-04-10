@@ -36,9 +36,6 @@ class AjaxRemove extends \Hackathon\AdminFavorites\Controller\Adminhtml\AjaxAbst
         $favorite->loadByUserIdAndUrl($userId, $url);
 
         $favorite->addData([
-            'url' => $url,
-            'user_id' => $userId,
-            'label' => $this->getLabel(),
             'is_favorite' => '0',
             'updated_at' => new \Zend_Db_Expr('NOW()')
         ]);
