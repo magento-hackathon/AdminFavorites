@@ -4,6 +4,23 @@ namespace Hackathon\AdminFavorites\Controller\Adminhtml\Favorites;
 class AjaxRemove extends \Hackathon\AdminFavorites\Controller\Adminhtml\AjaxAbstract
 {
     /**
+     * @param \Magento\Backend\App\Action\Context $context
+     * @param \Hackathon\AdminFavorites\Model\FavoriteFactory $favoriteFactory
+     * @param \Magento\Backend\Model\Auth\Session $authSession
+     * @param \Magento\Framework\Controller\Result\RawFactory $resultRawFactory
+     */
+    public function __construct(
+        \Magento\Backend\App\Action\Context $context,
+        \Hackathon\AdminFavorites\Model\FavoriteFactory $favoriteFactory,
+        \Magento\Backend\Model\Auth\Session $authSession,
+        \Magento\Framework\Controller\Result\RawFactory $resultRawFactory
+    ) {
+        parent::__construct($context);
+        $this->_favoriteFactory = $favoriteFactory;
+        $this->_authSession = $authSession;
+        $this->resultRawFactory = $resultRawFactory;
+    }
+    /**
      *
      * @throws \Magento\Framework\Exception\LocalizedException
      */

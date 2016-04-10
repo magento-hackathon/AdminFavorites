@@ -51,11 +51,11 @@ $isFavorite = $block->isCurrentPageFavorite();
     <?php endif; ?>
     <div class="admin__action-dropdown-menu">
         <?php if ($isFavorite) : ?>
-            <button type="button" title="Remove this page from favorites">
+            <button id="adminfavorites_remove" type="button" title="Remove this page from favorites">
                 <span>Remove</span>
             </button>
         <?php else: ?>
-            <button type="button" title="Add this page to favorites">
+            <button id="adminfavorites_add" type="button" title="Add this page to favorites">
                 <span>Add</span>
             </button>
         <?php endif;?>
@@ -106,10 +106,13 @@ $isFavorite = $block->isCurrentPageFavorite();
     </div>
 </div>
 <script type="text/javascript">
+    var currentPageKey = '<?php echo $this->getCurrentPageKey(); ?>';
     var getFavesUrl = '<?php echo $this->getGetFavoritesUrl(); ?>';
-    var toggleFaveUrl = '<?php echo $this->getToggleFavoriteUrl(); ?>//';
+    var addFavoriteUrl = '<?php echo $this->getAddFavoriteUrl(); ?>//';
+    var removeFavoriteUrl = '<?php echo $this->getRemoveFavoriteUrl(); ?>//';
+
     var getFavesData = {form_key: window.FORM_KEY};
-    var toggleFaveData = {};
+
     require(['jquery','adminFavoritesToolbarEntry'],function($){
         $(window).load(function() {
         });

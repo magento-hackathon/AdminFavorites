@@ -16,7 +16,11 @@ class ToolbarEntry extends \Magento\Backend\Block\Template
     }
 
     public function isCurrentPageFavorite() {
-        return false;
+        return true;
+    }
+
+    public function getCurrentPageKey() {
+        return $this->getRequest()->getControllerName() . '/' . $this->getRequest()->getActionName() . '/' . $this->getRequest()->getRouteName() . '/' . $this->getRequest()->getModuleName();
     }
 
     public function getGetFavoritesUrl() {

@@ -40,7 +40,8 @@ class AjaxAdd extends \Hackathon\AdminFavorites\Controller\Adminhtml\AjaxAbstrac
             'user_id' => $userId,
             'label' => $this->getLabel(),
             'is_favorite' => '1',
-            'updated_at' => new \Zend_Db_Expr('NOW()')
+            'updated_at' => new \Zend_Db_Expr('NOW()'),
+            'number_visits' => intval($favorite->getData('number_visits')) + 1,
         ]);
 
         $favorite->save();
