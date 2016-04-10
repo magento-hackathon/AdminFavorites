@@ -1,6 +1,23 @@
 <style>
     .favorites-action:before {
         content: "\e606";       /* This is not ideal, but it's good enough for now in a hackathon. */
+        margin-right: 0;
+        font-size: 1.9rem;
+        font-family: 'Admin Icons';
+        line-height: 1;
+    }
+    .favorites-action:after {
+        display: none;
+    }
+    .favorites-wrapper {
+        float: right;
+    }
+    .favorites-menu-row {
+        width: 500px;
+        list-style: none none;
+    }
+    .favorites-menu-row ul li {
+        list-style: none none;
     }
 </style>
 <?php
@@ -12,22 +29,81 @@
 <?php
 $isFavorite = $block->isCurrentPageFavorite();
 ?>
-<div class="notifications-wrapper admin__action-dropdown-wrap"
+<div class="favorites-wrapper admin__action-dropdown-wrap"
     data-mage-init='{"toolbarEntry": {}}'
     data-favorites-key="">
     <?php if ($isFavorite) : ?>
         <a
-            class="notifications-action admin__action-dropdown"
-            href="/"
-            title="<?php /* @escapeNotVerified */ echo __('Click to remove Favorite'); ?>">
+            class="favorites-action admin__action-dropdown"
+            title="<?php /* @escapeNotVerified */ echo __('Click to remove Favorite'); ?>"
+            data-mage-init='{"dropdown":{}}'
+            data-toggle="dropdown"
+        >
         </a>
     <?php else : ?>
         <a
-            class="notifications-action favorites-action admin__action-dropdown"
-            href="/"
-            title="<?php /* @escapeNotVerified */ echo __('Click to add Favorite'); ?>">
+            class="favorites-action admin__action-dropdown"
+            title="<?php /* @escapeNotVerified */ echo __('Click to add Favorite'); ?>"
+            data-mage-init='{"dropdown":{}}'
+            data-toggle="dropdown"
+        >
         </a>
     <?php endif; ?>
+    <div class="admin__action-dropdown-menu">
+        <?php if ($isFavorite) : ?>
+            <button type="button" title="Remove this page from favorites">
+                <span>Remove</span>
+            </button>
+        <?php else: ?>
+            <button type="button" title="Add this page to favorites">
+                <span>Add</span>
+            </button>
+        <?php endif;?>
+
+        <ul
+            class="favorites-menu-row"
+            data-mark-as-read-url="">
+            <li class="column col-l-4">
+                <ul role="menu">
+                    <li data-ui-id="menu-magento-reports-report-marketing" class="item-report-marketing  parent  level-1" role="menu-item">
+                        <strong class="submenu-group-title" role="presentation">
+                            <span>Favorites</span>
+                        </strong>
+                        <div class="submenu">
+                            <ul id="favorites-menu" role="menu">
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+            <li class="column col-l-4">
+                <ul role="menu">
+                    <li data-ui-id="menu-magento-reports-report-marketing" class="item-report-marketing  parent  level-1" role="menu-item">
+                        <strong class="submenu-group-title" role="presentation">
+                            <span>Recently Viewed</span>
+                        </strong>
+                        <div class="submenu">
+                            <ul id="recently-viewed-menu" role="menu">
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+            <li class="column col-l-4">
+                <ul role="menu">
+                    <li data-ui-id="menu-magento-reports-report-marketing" class="item-report-marketing  parent  level-1" role="menu-item">
+                        <strong class="submenu-group-title" role="presentation">
+                            <span>Mostly Viewed</span>
+                        </strong>
+                        <div class="submenu">
+                            <ul id="mostly-viewed-menu" role="menu">
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
 </div>
 <script type="text/javascript">
     require(['jquery','adminFavoritesToolbarEntry'],function($){
