@@ -1,21 +1,30 @@
 <style>
     .favorites-wrapper {
         float: right;
-        z-index: 10;
+        z-index: 401;
     }
     .favorites-menu-row {
         width: 650px;
         list-style: none none;
+        line-height: 2;
     }
     .favorites-menu-row ul li {
         list-style: none none;
     }
     .favorites-item {
         font-size: 10px;
+        line-height: 2;
+        margin: 3px;
     }
     .item-favorites-link:hover{
         background-color: #e0f6fe;
         text-decoration: none;
+    }
+    .favorites-wrapper-dropdown{
+        padding-top:10px;
+        padding-bottom: 10px;
+        padding-right: 15px;
+        padding-left:15px;
     }
 </style>
 <?php
@@ -38,7 +47,7 @@
         data-toggle="dropdown"
     >
     </a>
-    <div class="admin__action-dropdown-menu">
+    <div class="favorites-wrapper-dropdown admin__action-dropdown-menu">
             <button id="adminfavorites_remove" class="hidden" type="button" title="Remove this page from favorites">
                 <span>Remove</span>
             </button>
