@@ -18,4 +18,11 @@ class ToolbarEntry extends \Magento\Backend\Block\Template
     public function isCurrentPageFavorite() {
         return false;
     }
+
+    public function getGetFavoritesUrl() {
+        return $this->_urlBuilder->getUrl('adminfavorites/favorites/ajaxGet');
+    }
+    public function getToggleFavoriteUrl() {
+        return $this->_urlBuilder->getUrl('adminfavorites/favorites/ajaxToggle');
+    }
 }

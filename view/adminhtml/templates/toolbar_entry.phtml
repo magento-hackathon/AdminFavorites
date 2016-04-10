@@ -12,24 +12,28 @@
 <?php
 $isFavorite = $block->isCurrentPageFavorite();
 ?>
-<div class="notifications-wrapper admin__action-dropdown-wrap"
+<div id="hackathon_admin_favorites_heart" class="notifications-wrapper admin__action-dropdown-wrap"
     data-mage-init='{"toolbarEntry": {}}'
     data-favorites-key="">
     <?php if ($isFavorite) : ?>
         <a
             class="notifications-action admin__action-dropdown"
-            href="/"
+            href="#"
             title="<?php /* @escapeNotVerified */ echo __('Click to remove Favorite'); ?>">
         </a>
     <?php else : ?>
         <a
             class="notifications-action favorites-action admin__action-dropdown"
-            href="/"
+            href="#"
             title="<?php /* @escapeNotVerified */ echo __('Click to add Favorite'); ?>">
         </a>
     <?php endif; ?>
 </div>
 <script type="text/javascript">
+    var getFavesUrl = '<?php echo $this->getGetFavoritesUrl(); ?>';
+    var toggleFaveUrl = '<?php echo $this->getToggleFavoriteUrl(); ?>//';
+    var getFavesData = {form_key: window.FORM_KEY};
+    var toggleFaveData = {};
     require(['jquery','adminFavoritesToolbarEntry'],function($){
         $(window).load(function() {
         });
