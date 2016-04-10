@@ -13,7 +13,7 @@ define([
         $.each(json, function(element, value){
             var element = '<li data-ui-id="menu-magento-reports-report-shopcart-product" class="item-report-shopcart-product level-2" role="menu-item">' +
                 '<a href="'+value.url+'" class="">' +
-                '<span>'+value.label+'</span>' +
+                '<span class="favorites-item">'+value.label+'</span>' +
                 '</a>' +
                 '</li>';
             $('#favorites-menu').append(element);
@@ -27,7 +27,7 @@ define([
         $.each(json, function(element, value){
             var element = '<li data-ui-id="menu-magento-reports-report-shopcart-product" class="item-report-shopcart-product level-2" role="menu-item">' +
                 '<a href="'+value.url+'" class="">' +
-                '<span>'+value.label+'</span>' +
+                '<span class="favorites-item">'+value.label+'</span>' +
                 '</a>' +
                 '</li>';
 
@@ -42,7 +42,7 @@ define([
         $.each(json, function(element, value){
             var element = '<li data-ui-id="menu-magento-reports-report-shopcart-product" class="item-report-shopcart-product level-2" role="menu-item">' +
                 '<a href="'+value.url+'" class="">' +
-                '<span>'+value.label+'</span>' +
+                '<span class="favorites-item">'+value.label+'</span>' +
                 '</a>' +
                 '</li>';
 
