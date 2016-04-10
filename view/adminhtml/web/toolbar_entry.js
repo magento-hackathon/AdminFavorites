@@ -48,6 +48,27 @@ define([
             $('#mostly-viewed-menu').append(element);
         });
     }
+    var viewPage = function(){
+        var requestUrl = $('#favorites-wrapper-id').attr('data-increment-page-viewed-url');
+        console.log(requestUrl);
+        var requestData = {
+            form_key: window.FORM_KEY,
+            url: currentPageKey,
+            label: document.title
+        }
+        console.log(requestData);
+        $.ajax({
+            url: requestUrl,
+            type: 'POST',
+            dataType: 'json',
+            data: requestData,
+            showLoader: false
+        }).done(function() {
+            console.log("done");
+        });
+
+    }
+    viewPage();
     populateFavorites(parsedJson.my_favorites);
     populateMostlyViewed(parsedJson.mostly_viewed);
     populateRecentlyViewed(parsedJson.recently_viewed);

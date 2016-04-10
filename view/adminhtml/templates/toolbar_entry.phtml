@@ -29,9 +29,12 @@
 <?php
 $isFavorite = $block->isCurrentPageFavorite();
 ?>
-<div class="favorites-wrapper admin__action-dropdown-wrap"
+<div
+    id="favorites-wrapper-id"
+    class="favorites-wrapper admin__action-dropdown-wrap"
     data-mage-init='{"toolbarEntry": {}}'
-    data-favorites-key="">
+    data-favorites-key=""
+    data-increment-page-viewed-url="<?php echo $this->getIncrementUrl();?>">
     <a
         href="#"
         class="favorites-action admin__action-dropdown"

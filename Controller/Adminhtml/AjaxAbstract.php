@@ -39,7 +39,7 @@ abstract class AjaxAbstract extends \Magento\Backend\App\Action
     {
         $label = $this->getRequest()->getParam('label');
         if (!$label) {
-            throw new \Magento\Framework\LocalizedException(__('Label not given!'));
+            throw new \Magento\Framework\Exception\LocalizedException(__('Label not given!'));
         }
         return $label;
     }
