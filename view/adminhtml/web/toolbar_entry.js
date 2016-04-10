@@ -48,6 +48,19 @@ define([
             $('#mostly-viewed-menu').append(element);
         });
     }
+    var populateFavoritesMenu = function(json){
+        if(typeof json == "object") {
+            if(json.my_favorites) {
+                populateFavorites(json.my_favorites);
+            }
+            if(json.mostly_viewed) {
+                populateMostlyViewed(json.mostly_viewed);
+            }
+            if(json.recently_viewed) {
+                populateRecentlyViewed(json.recently_viewed);
+            }
+        }
+    }
     var viewPage = function(){
         var requestUrl = $('#favorites-wrapper-id').attr('data-increment-page-viewed-url');
         console.log(requestUrl);
@@ -63,15 +76,13 @@ define([
             dataType: 'json',
             data: requestData,
             showLoader: false
-        }).done(function() {
-            console.log("done");
+        }).done(function(response) {
+            populateFavoritesMenu(response);
+            console.log(response);
         });
 
     }
     viewPage();
-    populateFavorites(parsedJson.my_favorites);
-    populateMostlyViewed(parsedJson.mostly_viewed);
-    populateRecentlyViewed(parsedJson.recently_viewed);
 
     var showFavoriteDetails = function (favoriteEntry) {
         var favorite = favoriteEntry.find('.notifications-entry-description');
