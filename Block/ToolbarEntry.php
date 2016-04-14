@@ -22,11 +22,17 @@ class ToolbarEntry extends \Magento\Backend\Block\Template
     public function getGetFavoritesUrl() {
         return $this->_urlBuilder->getUrl('adminfavorites/favorites/ajaxGet');
     }
+
     public function getAddFavoriteUrl() {
         return $this->_urlBuilder->getUrl('adminfavorites/favorites/ajaxAdd');
     }
+
     public function getRemoveFavoriteUrl() {
         return $this->_urlBuilder->getUrl('adminfavorites/favorites/ajaxRemove');
+    }
+
+    public function getRemoveFavoriteUrlItem() {
+        return $this->_urlBuilder->getUrl('adminfavorites/favorites/ajaxRemoveitem');
     }
 
     public function getIncrementUrl() {

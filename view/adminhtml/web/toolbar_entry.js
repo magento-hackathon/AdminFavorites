@@ -5,6 +5,37 @@ define([
 ], function ($) {
     'use strict';
 
+    var attachActionsToFavs = function() {
+        $('.delete_fav_item').unbind('click');
+        $('.delete_fav_item').click(function (event) {
+            event.stopPropagation();
+            var mydata = $(this).data();
+            var favorites_id = mydata.value;
+            //var json1 = JSON.stringify(mydata);
+            console.log('remove ' + favorites_id);
+            $.ajax({
+                type: "POST",
+                url: removeFavoriteUrlItem,
+                data: {id       :favorites_id
+                      ,form_key : window.FORM_KEY
+                },
+                success: function (response) {
+                    console.log('remove success : ' + JSON.stringify(response));
+                    populateFavoritesMenu(response);
+                }
+            }).done(function () {
+                console.log('remove done');
+            });
+        });
+
+        $('.edit_fav').click(function (event) {
+            event.stopPropagation();
+            var mydata = $(this).data();
+            var favorites_id = mydata.value;
+            console.log('edit label for ' + favorites_id);
+        });
+    };
+
     var populateFavorites = function(json){
         if(!typeof json == 'object'){
             var json = JSON.parse(json);
@@ -12,12 +43,15 @@ define([
         $('#favorites-menu').html('');
         $.each(json, function(element, value){
             var element = '<li data-ui-id="menu-magento-reports-report-shopcart-product" class="item-favorites-link item-report-shopcart-product level-2" role="menu-item">' +
-                '<a href="'+value.url+'" class="item-favorites-link">' +
-                '<div class="favorites-item">'+value.label+'</div>' +
-                '</a>' +
+                '<div class="favorites-item">'+
+                '<div class="delete_fav-wrapper"><div class="delete_fav_item" data-value="' + value.id + '" title="Remove Favorite" ></div></div> ' +
+                '<div class="edit_fav-wrapper"><div   class="edit_fav"   data-value="' + value.id + '" title="Edit Label" ></div></div> ' +
+                '<a href="'+value.url+'" title="Navigate to ' + value.label + '" class="item-favorites-link">' + value.label + '</a>' +
+                '</div>' +
                 '</li>';
             $('#favorites-menu').append(element);
         });
+        attachActionsToFavs();
     };
     var populateRecentlyViewed = function(json){
         if(!typeof json == 'object'){
@@ -75,13 +109,13 @@ define([
     };
     var viewPage = function(){
         var requestUrl = $('#favorites-wrapper-id').attr('data-increment-page-viewed-url');
-        console.log(requestUrl);
+        //console.log(requestUrl);
         var requestData = {
             form_key: window.FORM_KEY,
             url: currentPageKey,
             label: document.title
         }
-        console.log(requestData);
+        //console.log(requestData);
         $.ajax({
             url: requestUrl,
             type: 'POST',
@@ -91,7 +125,7 @@ define([
         }).done(function(response) {
             showActionButton(response);
             populateFavoritesMenu(response);
-            console.log(response);
+            //console.log(response);
         });
 
     };
@@ -120,6 +154,7 @@ define([
             //updateFavoriteMegaMenu(result.items);
         });
     });
+
     $('#adminfavorites_remove').click(function (event) {
         event.stopPropagation();
         $('#adminfavorites_remove span').html('Removing...');
@@ -137,7 +172,6 @@ define([
             //updateFavoriteMegaMenu(result.items);
         });
     });
-
 
     $('.favorites-wrapper .admin__action-dropdown-menu .notifications-entry').on('click.showNotification', function (event) {
         // hide notification dropdown

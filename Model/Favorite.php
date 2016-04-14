@@ -29,4 +29,13 @@ class Favorite extends \Magento\Framework\Model\AbstractModel implements Favorit
         $this->_hasDataChanges = false;
         return $this;
     }
+
+    public function loadByUserIdAndId($userId, $id)
+    {
+        $this->_getResource()->loadByUserIdAndId($this, $userId, $id);
+        $this->_afterLoad();
+        $this->setOrigData();
+        $this->_hasDataChanges = false;
+        return $this;
+    }
 }

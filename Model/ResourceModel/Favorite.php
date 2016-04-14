@@ -53,4 +53,32 @@ class Favorite extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
         return $select;
     }
 
+    public function loadByUserIdAndId(\Magento\Framework\Model\AbstractModel $object, $userId, $id)
+    {
+        $connection = $this->getConnection();
+        if ($connection) {
+            $select = $this->_getLoadByUserIdAndIdSelect($userId, $id, $object);
+            $data = $connection->fetchRow($select);
+
+            if ($data) {
+                $object->setData($data);
+            }
+        }
+
+        $this->unserializeFields($object);
+        $this->_afterLoad($object);
+
+        return $this;
+    }
+
+    protected function _getLoadByUserIdAndIdSelect($userId, $id, $object)
+    {
+        $userIdField = $this->getConnection()->quoteIdentifier(sprintf('%s.%s', $this->getMainTable(), 'user_id'));
+        $idField = $this->getConnection()->quoteIdentifier(sprintf('%s.%s', $this->getMainTable(), 'favorites_id'));
+        $select = $this->getConnection()->select()
+                       ->from($this->getMainTable())
+                       ->where($userIdField . '=?', $userId)
+                       ->where($idField . '=?', $id);
+        return $select;
+    }
 }

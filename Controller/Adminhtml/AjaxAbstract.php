@@ -31,6 +31,15 @@ abstract class AjaxAbstract extends \Magento\Backend\App\Action
         return $url;
     }
 
+    protected function getFavoriteId()
+    {
+        $id = $this->getRequest()->getParam('id');
+        if (!$id) {
+            throw new \Magento\Framework\Exception\LocalizedException(__('URL not given!'));
+        }
+        return $id;
+    }
+
     /**
      * @return mixed
      * @throws Exception
@@ -41,6 +50,7 @@ abstract class AjaxAbstract extends \Magento\Backend\App\Action
         if (!$label) {
             throw new \Magento\Framework\Exception\LocalizedException(__('Label not given!'));
         }
+        $label = str_replace(' / Magento Admin', '', $label);
         return $label;
     }
 
@@ -123,8 +133,9 @@ abstract class AjaxAbstract extends \Magento\Backend\App\Action
     private function getFavoriteDataForOutput($favorite)
     {
         return [
-            'url' => $this->getRouteUrl($favorite->getData('url')),
+            'url'   => $this->getRouteUrl($favorite->getData('url')),
             'label' => $favorite->getData('label'),
+            'id'    => $favorite->getData('favorites_id')
         ];
     }
 
